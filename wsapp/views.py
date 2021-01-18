@@ -496,7 +496,7 @@ def place_order(request):
     try:
         email.send()
     except Exception as e:
-        return pass
+        pass
 
     return Response(status=status.HTTP_200_OK)
 
@@ -521,7 +521,7 @@ def contact_us(request):
     try:
         email.send()
     except Exception as e:
-        return pass
+        pass
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
