@@ -363,7 +363,10 @@ def sendEmailOnCreate(name, email):
         from_email='musicstore@null.net',
         to=[email]
     )
-    email.send()
+    try:
+        email.send()
+    except Exception as e:
+        pass
 
 @api_view(['POST'])
 def create_account(request):
@@ -490,7 +493,11 @@ def place_order(request):
         from_email='musicstore@null.net',
         to=[request.user]
     )
-    email.send()
+    try:
+        email.send()
+    except Exception as e:
+        return Response("Email is invalid." , status=status.HTTP_400_BAD_REQUEST)
+
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['POST'])
