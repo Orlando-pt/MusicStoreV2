@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container-fluid container-instruments">
+        <div style="width: 100%; height: 30%" class="row">
+            <div class="col-lg-2 col-md-3 col-sm-12">
+                <h1 class="font-weight-bold">{{ manu.name }}</h1>
+                <h5>Country: {{ manu.country }}</h5>
+                <div style='width:100%; height: 30%;' class="container-fluid">
+                    <img style="max-width: 60%; max-height: 60%" class="img-thumbnail" src="{{ manu.logo }}">
+                </div>
+                {% if admin %}
+                    <div style="text-align: center; justify-content: center" class="row">
+                        <a class="btn-href" href="{% url 'edit_manufacturer' manu.id %}">Edit</a>
+                        <a class="btn-href" href="{% url 'delete_manufacturer' manu.id %}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-10 col-md-9 col-sm-12">
+                <section class="cards-wrapper">
+                    {% if prods|length == 0 %}
+                        <h5 style="text-align: center">No products associated, yet.</h5>
+                    {% else %}
+                    {% for p in prods.values %}
+                        <div class="card-grid-space">
+                            <div class="num">{{ p.0.name }}</div>
+                            <a class="card-instruments" href="{% url 'instruments_details' p.0.id %}"
+                               style="--bg-img: url({{ p.0.image }})">
+                                <div>
+                                    <h1>{{ p.1.price }}$</h1>
+                                    <p>Category: {{ p.0.category }}</p>
+                                    <p>Description : {{ p.0.description }}</p>
+                                    {% if not admin %}
+                                    <div class="tags">
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            <div class="form-inputs-instruments">
+                                                <input type="hidden" name="id" value="{{ p.0.id }}">
+                                                <input class="tag" type="submit" name="purchase" value="Buy">
+                                                {% if p.2 %}  <!--se já estiver lá-->
+                                                    <input class="tag" type="submit" name="rem_wishlist"
+                                                           value="Remove from wishlist">
+                                                {% else %}
+                                                    <input class="tag" type="submit" name="add_wishlist"
+                                                           value="Add to wishlist">
+                                                {% endif %}
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

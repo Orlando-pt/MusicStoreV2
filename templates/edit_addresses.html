@@ -1,0 +1,27 @@
+
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container form-container">
+        <h2>{{ operacao|capfirst }} address </h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                {% if field.name != 'person' %}
+                <div class="field-form row">
+                    <div class="col-3">
+                        {{ field.label }}
+                    </div>
+                    <div class="col-9">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            <input type="hidden" name="id" value="{{ id }}">
+            <input type="hidden" name="person" value="{{ person.id }}">
+
+            <input class="btn-form" type="submit" name="edit" value="save">
+        </form>
+    </div>
+{% endblock %}

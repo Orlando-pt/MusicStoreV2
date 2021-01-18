@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container container-info">
+        <h1>Your password was successfully changed!</h1>
+        <a class="btn-href" href="/">Go to home page</a>
+        <a class="btn-href" href="{% url 'account' %}">Go to account details</a>
+    </div>
+{% endblock %}

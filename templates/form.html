@@ -1,0 +1,19 @@
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        <div class="field-form row">
+            <div class="col-3">
+                {{ field.label }}
+            </div>
+            <div class="col-9">
+                {{ field }}
+            </div>
+        </div>
+        <div>{{ field.errors }}</div>
+
+    {% endfor %}
+    {% if submit_val %}
+        <input class="btn-form" type="submit" value="{{ submit_val }}">
+    {% endif %}
+</form>
